@@ -8,3 +8,5 @@ export const VALIDATE_MESSAGE = {
   PHONE:'Введите номер телефона',
   MESSAGE:'Введите сообщение',
 }
+
+export const SERVER_NOT_FOUND='Сервер не доступен'

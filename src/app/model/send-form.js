@@ -1,3 +1,4 @@
+import { SERVER_NOT_FOUND } from '../../shared/lib/constants/constants';
 import { ROUTES } from '../../shared/lib/constants/routes';
 
 export function sendForm(form) {
@@ -10,7 +11,7 @@ export function sendForm(form) {
   form.classList.remove('form_success');
   form.classList.remove('form_error');
 
-  fetch(ROUTES.HOST + ROUTES.REGISTRATION, {
+  fetch(ROUTES.REMOTE_HOST + ROUTES.REGISTRATION, {
     method: 'POST',
     body: new FormData(form),
   })
@@ -21,7 +22,6 @@ export function sendForm(form) {
         form.classList.add('form_error');
         status.classList.remove('form__status_success');
         status.classList.add('form__status_err');
-
         status.innerText = data?.fields?.inputName;
       } else if (data.status === 'success') {
         form.reset();
@@ -34,6 +34,11 @@ export function sendForm(form) {
     })
     .catch((error) => {
       console.error('Произошла ошибка', error);
+      form.classList.remove('form_success');
+      form.classList.add('form_error');
+      status.classList.remove('form__status_success');
+      status.classList.add('form__status_err');
+      status.innerText = SERVER_NOT_FOUND;
     })
     .finally(() => {
       setTimeout(() => {
